@@ -10,26 +10,92 @@
         <h1>um clicker sem nada ainda por que ta sem net</h1>
     </header>
     <main>
-        <p>0</p>
+        <button class="main" onclick="joia()">0</button>
     </main>
     <footer>
         <h3>upgrades</h3>
-        <div>
+        <section>
+            <div class="upgrade1">
 
-        </div>
-
+            </div>
+            <div class="farm">
+                <button onclick="felizComprado()">Feliz <br>
+                custa 20</button>
+            </div>
+        </section>
     </footer>
     <script>
-        let numero = 0
+        let numero = 0;
+        let pontosPorSegundo = 0;
+        let upg1liberado = false;
+        let upg1comprado = false;
+
+
+        setInterval(() => {
+            numero += pontosPorSegundo;
+            renderJoia();
+        }, 1000)
+
+        function felizComprado() {
+            pontosPorSegundo += 1;
+            numero -=20;
+            
+        }
+
+        function pontos() {
+            if (upg1comprado){ 
+                numero += 2;
+            }
+            else {
+                numero++
+            }
+        }
 
         function joia() {
-            numero++
+            pontos()
+            renderJoia()
+
+            if (numero >= 20 && !upg1liberado) {
+                upgrade1() 
+                upg1liberado = true
+            }
+            
+        }
+        
+
+        function renderJoia() {
+            const button = document.querySelector("main button")
+            button.innerText = numero
+        }
+        renderJoia()
+
+        function upgrade1() {
+            const div = document.querySelector(".upgrade1")
+
+            const upgrade = document.createElement("button")
+            upgrade.innerText = "+1 por click"
+
+            upgrade.onclick = upgrade1buy
+
+            div.appendChild(upgrade)
         }
 
-        function render() {
-            const p = document.querySelector("p")
-            p.innerText
+        function upgrade1buy() {
+            if (numero >= 20 && !upg1comprado) {
+
+                numero -= 20;
+                upg1comprado = true;
+
+                const upgrade = document.querySelector(".upgrade1 button");
+                upgrade.innerText = "comprado";
+            
+               
+                renderJoia();
+            }
         }
+
+        
+
     </script>
 </body>
 </html>
