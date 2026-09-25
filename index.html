@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <h1>um clicker sem nada ainda por que ta sem net</h1>
+        <h1>emoji clicker</h1>
     </header>
     <main>
         <button class="main" onclick="joia()">0</button>
@@ -15,20 +15,26 @@
     <footer>
         <h3>upgrades</h3>
         <section>
-            <div class="upgrade1">
+            <div class="upgrade">
 
             </div>
+            <h3>fazenda</h3>
             <div class="farm">
-                <button onclick="felizComprado()">Feliz <br>
-                custa 20</button>
+                <button onclick="felizComprado()">🙂 <br>
+                custa 100</button>
+                <button onclick="sorrisoComprado()">😁 <br>
+                custa 400</button>
             </div>
         </section>
     </footer>
     <script>
         let numero = 0;
         let pontosPorSegundo = 0;
+        let pontosPorClick = 1;
         let upg1liberado = false;
         let upg1comprado = false;
+        let upg2liberado = false;
+        let upg2comprado = false;
 
 
         setInterval(() => {
@@ -37,18 +43,22 @@
         }, 1000)
 
         function felizComprado() {
-            pontosPorSegundo += 1;
-            numero -=20;
+            if (numero >= 100) {
+                pontosPorSegundo += 1;
+                numero -=100;
+            }
+            
+        }
+        function sorrisoComprado() {
+            if (numero >= 400) {
+                pontosPorSegundo += 25;
+                numero -=400;
+            }
             
         }
 
         function pontos() {
-            if (upg1comprado){ 
-                numero += 2;
-            }
-            else {
-                numero++
-            }
+            numero += pontosPorClick;
         }
 
         function joia() {
@@ -56,8 +66,12 @@
             renderJoia()
 
             if (numero >= 20 && !upg1liberado) {
-                upgrade1() 
-                upg1liberado = true
+                upgrade1();
+                upg1liberado = true;
+            }
+            if (numero >= 100 && !upg2liberado) {
+                upgrade2();
+                upg2liberado = true;
             }
             
         }
@@ -65,36 +79,64 @@
 
         function renderJoia() {
             const button = document.querySelector("main button")
-            button.innerText = numero
+            button.innerText = numero.toFixed(1)
         }
         renderJoia()
 
         function upgrade1() {
-            const div = document.querySelector(".upgrade1")
+            const div = document.querySelector(".upgrade")
 
-            const upgrade = document.createElement("button")
-            upgrade.innerText = "+1 por click"
+            const pipa = document.createElement("button")
+            pipa.innerText = "🪁"
+            pipa.classList.add("pipa")
 
-            upgrade.onclick = upgrade1buy
+            pipa.onclick = () => upgrade1buy(pipa)
 
-            div.appendChild(upgrade)
+            div.appendChild(pipa)
         }
 
-        function upgrade1buy() {
+        function upgrade1buy(pipa) {
             if (numero >= 20 && !upg1comprado) {
 
                 numero -= 20;
                 upg1comprado = true;
 
-                const upgrade = document.querySelector(".upgrade1 button");
-                upgrade.innerText = "comprado";
+                pontosPorClick += 1;
+
+                pipa.innerText = "comprado";
+            
+               
+                renderJoia();
+            }
+        }
+        function upgrade2() {
+            const div = document.querySelector(".upgrade")
+
+            const presente = document.createElement("button")
+            presente.innerText = "🎁"
+            presente.classList.add("presente")
+
+            presente.onclick = () => upgrade2buy(presente)
+
+            div.appendChild(presente)
+        }
+
+        function upgrade2buy(presente) {
+            if (numero >= 100 && !upg2comprado) {
+
+                numero -= 100;
+                upg2comprado = true;
+
+                pontosPorClick += 3;
+
+                presente.innerText = "comprado";
             
                
                 renderJoia();
             }
         }
 
-        
+        renderJoia();
 
     </script>
 </body>
