@@ -35,6 +35,10 @@
         let upg1comprado = false;
         let upg2liberado = false;
         let upg2comprado = false;
+        let upg3liberado = false;
+        let upg3comprado = false;
+        let upg4liberado = false;
+        let upg4comprado = false;
 
 
         setInterval(() => {
@@ -73,13 +77,21 @@
                 upgrade2();
                 upg2liberado = true;
             }
+            if (numero >= 10 && !upg3liberado) {
+                upgrade3();
+                upg3liberado = true;
+            }
+            if (numero >= 10 && !upg4liberado) {
+                upgrade4();
+                upg4liberado = true;
+            }
             
         }
         
 
         function renderJoia() {
             const button = document.querySelector("main button")
-            button.innerText = numero.toFixed(1)
+            button.innerText = numero.toFixed(2)
         }
         renderJoia()
 
@@ -135,6 +147,58 @@
                 renderJoia();
             }
         }
+        function upgrade3() {
+            const div = document.querySelector(".upgrade")
+
+            const coração = document.createElement("button")
+            coração.innerText = "❤️"
+            coração.classList.add("coração")
+
+            coração.onclick = () => upgrade3buy(coração)
+
+            div.appendChild(coração)
+        }
+
+        function upgrade3buy(coração) {
+            if (numero >= 10 && !upg3comprado) {
+
+                numero -= 10;
+                upg3comprado = true;
+
+                pontosPorClick *= 1.1;
+
+                coração.innerText = "comprado";
+            
+               
+                renderJoia();
+            }
+        }function upgrade4() {
+            const div = document.querySelector(".upgrade")
+
+            const áries = document.createElement("button")
+            áries.innerText = "♈️"
+            áries.classList.add("áries")
+
+            áries.onclick = () => upgrade4buy(áries)
+
+            div.appendChild(áries)
+        }
+
+        function upgrade4buy(áries) {
+            if (numero >= 100 && !upg4comprado) {
+
+                numero -= 100;
+                upg4comprado = true;
+
+                pontosPorSegundo *= 1.5;
+
+                áries.innerText = "comprado";
+            
+               
+                renderJoia();
+            }
+        }
+        
 
         renderJoia();
 
