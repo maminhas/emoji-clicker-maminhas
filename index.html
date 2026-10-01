@@ -4,10 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>emoji clicker</title>
+    <style>
+
+        * {
+            margin: 0;
+            box-sizing: border-box;
+            
+        }
+        body {
+            min-height: 100vh;
+            border: 25px solid black;
+            font-family: "Comic Sans MS", cursive;
+
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+        header {
+            text-align: center;
+            border: 3px solid black;
+        }
+        a {
+            padding-left: 800px;
+            font-size: 20px;
+        }
+        main {
+            display: grid;
+            text-align: center;
+            place-items: center;
+            border: 3px solid black;
+            height: 600px;
+        }
+        .main {
+            font-size: 40px;
+        }
+        footer {
+
+        }
+        section {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            min-height: calc(100vh - 100px);
+        }
+        .upgrade h3 {
+            font-size: 25px;
+        }
+        
+        .upgrade {
+            border: 3px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+        }
+        .farm {
+            border: 3px solid black;
+
+        }
+
+    </style>
 </head>
 <body>
     <header>
-        <h1>emoji clicker</h1>
+        <h1>emoji clicker <sup><a href="emojis.html">emojis que usei</a></sup></h1>
     </header>
     <main>
         <button class="main" onclick="joia()">0</button>
@@ -23,7 +82,15 @@
                 <button onclick="felizComprado()">🙂 <br>
                 custa 100</button>
                 <button onclick="sorrisoComprado()">😁 <br>
-                custa 400</button>
+                custa 500</button>
+                <button onclick="rindoComprado()">😂 <br>
+                custa 1500</button>
+                <button onclick="derretidoComprado()">🫠 <br>
+                custa 4000</button>
+                <button onclick="doidoComprado()">🤪 <br>
+                custa 15000</button>
+                <button onclick="iradoComprado()">😎 <br>
+                custa 40000</button>
             </div>
         </section>
     </footer>
@@ -54,9 +121,37 @@
             
         }
         function sorrisoComprado() {
-            if (numero >= 400) {
-                pontosPorSegundo += 25;
-                numero -=400;
+            if (numero >= 500) {
+                pontosPorSegundo += 15;
+                numero -=500;
+            }
+            
+        }
+        function rindoComprado() {
+            if (numero >= 1500) {
+                pontosPorSegundo += 100;
+                numero -=1500;
+            }
+            
+        }
+        function derretidoComprado() {
+            if (numero >= 4000) {
+                pontosPorSegundo += 380;
+                numero -=4000;
+            }
+            
+        }
+        function doidoComprado() {
+            if (numero >= 15000) {
+                pontosPorSegundo += 1300;
+                numero -=15000;
+            }
+            
+        }
+        function iradoComprado() {
+            if (numero >= 40000) {
+                pontosPorSegundo += 10500;
+                numero -=40000;
             }
             
         }
@@ -69,19 +164,19 @@
             pontos()
             renderJoia()
 
-            if (numero >= 20 && !upg1liberado) {
+            if (numero >= 100 && !upg1liberado) {
                 upgrade1();
                 upg1liberado = true;
             }
-            if (numero >= 100 && !upg2liberado) {
+            if (numero >= 600 && !upg2liberado) {
                 upgrade2();
                 upg2liberado = true;
             }
-            if (numero >= 10 && !upg3liberado) {
+            if (numero >= 1400 && !upg3liberado) {
                 upgrade3();
                 upg3liberado = true;
             }
-            if (numero >= 10 && !upg4liberado) {
+            if (numero >= 1500 && !upg4liberado) {
                 upgrade4();
                 upg4liberado = true;
             }
@@ -108,9 +203,9 @@
         }
 
         function upgrade1buy(pipa) {
-            if (numero >= 20 && !upg1comprado) {
+            if (numero >= 100 && !upg1comprado) {
 
-                numero -= 20;
+                numero -= 100;
                 upg1comprado = true;
 
                 pontosPorClick += 1;
@@ -134,9 +229,9 @@
         }
 
         function upgrade2buy(presente) {
-            if (numero >= 100 && !upg2comprado) {
+            if (numero >= 600 && !upg2comprado) {
 
-                numero -= 100;
+                numero -= 600;
                 upg2comprado = true;
 
                 pontosPorClick += 3;
@@ -160,9 +255,9 @@
         }
 
         function upgrade3buy(coração) {
-            if (numero >= 10 && !upg3comprado) {
+            if (numero >= 1400 && !upg3comprado) {
 
-                numero -= 10;
+                numero -= 1400;
                 upg3comprado = true;
 
                 pontosPorClick *= 1.1;
@@ -185,9 +280,9 @@
         }
 
         function upgrade4buy(áries) {
-            if (numero >= 100 && !upg4comprado) {
+            if (numero >= 1500 && !upg4comprado) {
 
-                numero -= 100;
+                numero -= 1500;
                 upg4comprado = true;
 
                 pontosPorSegundo *= 1.5;
