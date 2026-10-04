@@ -29,13 +29,11 @@
         }
         main {
             display: grid;
-            text-align: center;
-            place-items: center;
-            border: 3px solid black;
-            height: 600px;
+           place-items: center;
+           border: 3px solid black;
         }
         .main {
-            font-size: 40px;
+           font-size: 40px;
         }
         footer {
 
@@ -49,7 +47,7 @@
             font-size: 25px;
         }
         
-        .upgrade {
+        .upgrades {
             border: 3px solid black;
             display: flex;
             flex-direction: column;
@@ -57,9 +55,35 @@
             gap: 10px;
 
         }
+        .upgrade {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         .farm {
-            border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
 
+        }
+        .farm-area {
+            border: 3px solid black;
+            padding: 10px;
+        }
+        .farm-area h3 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .farm button {
+            font-family: inherit;
+            font-size: 18px;
+            padding: 8px;
+        }
+        .game {
+            display: grid;
+             grid-template-rows: 1fr auto;
         }
 
     </style>
@@ -68,16 +92,20 @@
     <header>
         <h1>emoji clicker <sup><a href="emojis.html">emojis que usei</a></sup></h1>
     </header>
+    <section> 
+         <div class="upgrades">
+        <h3>upgrades</h3>
+            <div class="upgrade">
+            </div>
+        </div>   
+
+    <div class="game">
     <main>
         <button class="main" onclick="joia()">0</button>
     </main>
-    <footer>
-        <h3>upgrades</h3>
-        <section>
-            <div class="upgrade">
-
-            </div>
-            <h3>fazenda</h3>
+    
+        <div class="farm-area">
+        <h3>fazenda</h3>
             <div class="farm">
                 <button onclick="felizComprado()">🙂 <br>
                 custa 100</button>
@@ -85,14 +113,17 @@
                 custa 500</button>
                 <button onclick="rindoComprado()">😂 <br>
                 custa 1500</button>
-                <button onclick="derretidoComprado()">🫠 <br>
+                <button onclick="derretidoComprado()">🥴 <br>
                 custa 4000</button>
                 <button onclick="doidoComprado()">🤪 <br>
                 custa 15000</button>
                 <button onclick="iradoComprado()">😎 <br>
                 custa 40000</button>
             </div>
-        </section>
+        </div>
+    </div>  
+    </section>
+    <footer>
     </footer>
     <script>
         let numero = 0;
