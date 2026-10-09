@@ -95,8 +95,7 @@
 <body>
     <header>
 
-        <h1>Emoji Clicker </h1><sup><a href="index.html">Principal</a>
-        <a href="conquistas.html">Conquistas</a></sup></h1>
+        <h1>Emoji Clicker </h1>
         
     </header>
     <section> 
@@ -160,21 +159,30 @@
             },
         ];
 
-        function desbloquearConquista(id) {
-            let conquistasSalvas = JSON.parse(localStorage.getItem("conquistas")) || conquistas;
+        let desbloqueadas = JSON.parse(localStorage.getItem("conquistas")) || [];
 
-            let conquista = conquistasSalvas.find(c => c.id === id);
-            if (conquista) {
-                conquista.desbloqueada = true;
+        function desbloquearConquista(id) {
+            if (!desbloqueadas.includes(id)) {
+            desbloqueadas.push(id);
+
+            localStorage.setItem("conquistas", JSON.stringify(desbloqueadas));
+            }
+        }
+
+        function verificarConquistas() {
+            if (numero >= 1) {
+            desbloquearConquista("primeiroClick");
             }
 
-            localStorage.setItem("conquistas", JSON.stringify(conquistasSalvas))
+            if (numero >= 100) {
+                desbloquearConquista("cemPontos");
+            }
         }
 
         //PONTOS POR SEGUNDO
         setInterval(() => {
             numero += pontosPorSegundo;
-            renderJoia();
+            renderJoia();   
         }, 1000)
 
         function felizComprado() {
@@ -226,8 +234,9 @@
         }
 
         function joia() {
-            pontos()
-            renderJoia()
+            pontos();
+            renderJoia();
+            
 
             if (numero >= 100 && !upg1liberado) {
                 upgrade1();
@@ -245,12 +254,7 @@
                 upgrade4();
                 upg4liberado = true;
             }
-            if (numero >= 1) {
-                desbloquearConquista("primeiroClick")
-            }
-            if (numero >= 100) {
-                desbloquearConquista("cemPontos")
-            }
+            verificarConquistas();
             
         }
         
