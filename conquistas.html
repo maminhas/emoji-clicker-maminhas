@@ -31,6 +31,13 @@
             font-size: 20px;
             padding: 8px;
         }
+        hr {
+            border: 1px solid black;
+            margin: 0 50px;
+        }
+        .conquistas {
+            padding: 30px;
+        }
 
     </style>
 
@@ -41,13 +48,53 @@
         <a href="conquistas.html">Conquistas</a></sup></h1>
     </header>
     <main>
-        <h1>
-            <div class="conquistas">conquistas</div>
-        </h1>
+        <div class="bloqueada">
+            <div id="listaBloqueadas"></div>
+        </div>
+
+        <hr>
+
+        <div class="desbloqueada">
+            <div id="listaDesbloqueadas"></div>
+        </div>
     </main>
     <footer>
 
     </footer>
     
+    <script>
+
+        const conquistas = [
+            {
+                id: "primeiroClick",
+                nome: "Primeiro Click"
+            },
+            {
+                id: "cemPontos",
+                nome: "100 pontos"
+            }
+        ];
+
+        const desbloqueadas = JSON.parse(localStorage.getItem("conquistas")) || [];
+
+        const listaBloqueadas = document.getElementById("listaBloqueadas");
+        const listaDesbloqueadas = document.getElementById("listaDesbloqueadas");
+
+        conquistas.forEach(conquista => {
+
+            const div = document.createElement("div");
+
+            div.textContent = conquista.nome;
+
+            if (desbloqueadas.includes(conquista.id)) {
+                listaDesbloqueadas.appendChild(div);
+            } else {
+                listaBloqueadas.appendChild(div);
+            }
+
+        })
+
+        
+    </script>
 </body>
 </html>

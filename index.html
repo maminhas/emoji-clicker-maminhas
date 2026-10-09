@@ -133,6 +133,7 @@
     <footer>
     </footer>
     <script>
+
         let numero = 0;
         let pontosPorSegundo = 0;
         let pontosPorClick = 1;
@@ -145,7 +146,32 @@
         let upg4liberado = false;
         let upg4comprado = false;
 
+        // CONQUISTAS
+        const conquistas = [
+            {
+                id: "primeiroClick",
+                nome: "primeiro Click",
+                desbloqueada: false
+            },
+            {
+                id: "cemPontos",
+                nome: "Cem",
+                desbloqueada: false
+            },
+        ];
 
+        function desbloquearConquista(id) {
+            let conquistasSalvas = JSON.parse(localStorage.getItem("conquistas")) || conquistas;
+
+            let conquista = conquistasSalvas.find(c => c.id === id);
+            if (conquista) {
+                conquista.desbloqueada = true;
+            }
+
+            localStorage.setItem("conquistas", JSON.stringify(conquistasSalvas))
+        }
+
+        //PONTOS POR SEGUNDO
         setInterval(() => {
             numero += pontosPorSegundo;
             renderJoia();
@@ -194,6 +220,7 @@
             
         }
 
+        //CLICK
         function pontos() {
             numero += pontosPorClick;
         }
@@ -218,16 +245,23 @@
                 upgrade4();
                 upg4liberado = true;
             }
+            if (numero >= 1) {
+                desbloquearConquista("primeiroClick")
+            }
+            if (numero >= 100) {
+                desbloquearConquista("cemPontos")
+            }
             
         }
         
-
+        //RENDER
         function renderJoia() {
             const button = document.querySelector("main button")
             button.innerText = numero.toFixed(2)
         }
         renderJoia()
 
+        //UPGRADES
         function upgrade1() {
             const div = document.querySelector(".upgrade")
 
