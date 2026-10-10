@@ -14,7 +14,7 @@
         body {
             min-height: 100vh;
             border: 25px solid black;
-            font-family: "Comic Sans MS", cursive;
+            font-family: "Comic Sans MS", sans-serif;
 
             display: grid;
             grid-template-rows: auto 1fr;
@@ -35,10 +35,41 @@
             display: grid;
            place-items: center;
            border: 3px solid black;
+           user-select: none;
         }
-        .main {
-           font-size: 40px;
+        .mainb {
+           font-size: 300px;
+           border: 0px;
+           background: white;
+           cursor: pointer;
+           transition: transform 0.08s;
         }
+        .mainb:active {
+            transform: scale(0.9);
+        }
+        p {
+            font-size: 80px;
+        }
+        .numeroFlutuante {
+            position: fixed;
+            font-size: 30px;
+            font-weight: bold;
+            color: goldenrod;
+            pointer-events: none;
+            animation: subir 0.8s ease-out forwards;
+        }
+        @keyframe {
+
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-80px);
+            }
+        }
+        
         footer {
 
         }
@@ -89,6 +120,21 @@
             display: grid;
              grid-template-rows: 1fr auto;
         }
+        .pipa, .presente, .coração, .áries {
+            font-size: 100px;
+        }
+        .comprado {
+            font-size: 20px !important;
+        }
+        .pontuação {
+            display: flex;
+            flex: auto;
+            gap: 100px;
+            background: #ddd;
+            border: 3px solid #aaa;
+            padding: 25px;
+            border-radius: 30px;
+        }
 
     </style>
 </head>
@@ -107,7 +153,12 @@
 
     <div class="game">
     <main>
-        <button class="main" onclick="joia()">0</button>
+        <div class="pontuação">
+            <p class="main">0</p>
+            <p id="goldPerSec"> 0g/s</p>
+        </div>
+        
+        <button class="mainb" onclick="joia(event)">💰️</button>
     </main>
     
         <div class="farm-area">
@@ -136,6 +187,7 @@
         let numero = 0;
         let pontosPorSegundo = 0;
         let pontosPorClick = 1;
+        let multiPontos = 1;
         let upg1liberado = false;
         let upg1comprado = false;
         let upg2liberado = false;
@@ -145,57 +197,46 @@
         let upg4liberado = false;
         let upg4comprado = false;
 
-        // CONQUISTAS
-        const conquistas = [
-            {
-                id: "primeiroClick",
-                nome: "primeiro Click",
-                desbloqueada: false
-            },
-            {
-                id: "cemPontos",
-                nome: "Cem",
-                desbloqueada: false
-            },
-        ];
+        function mostrarNumero(valor, x, y) {
+            const numeroFlutuante = document.createElement("span");
 
-        let desbloqueadas = JSON.parse(localStorage.getItem("conquistas")) || [];
+            numeroFlutuante.classList.add("numeroFlutuante");
+            numeroFlutuante.innerText = "+" + valor.toFixed(1);
 
-        function desbloquearConquista(id) {
-            if (!desbloqueadas.includes(id)) {
-            desbloqueadas.push(id);
+            numeroFlutuante.style.left = x + "px";
+            numeroFlutuante.style.top = y + "px";
 
-            localStorage.setItem("conquistas", JSON.stringify(desbloqueadas));
-            }
-        }
+            document.body.appendChild(numeroFlutuante);
 
-        function verificarConquistas() {
-            if (numero >= 1) {
-            desbloquearConquista("primeiroClick");
-            }
-
-            if (numero >= 100) {
-                desbloquearConquista("cemPontos");
-            }
-        }
+    setTimeout(() => {
+        numeroFlutuante.remove();
+    }, 800);
+}
 
         //PONTOS POR SEGUNDO
         setInterval(() => {
-            numero += pontosPorSegundo;
-            renderJoia();   
+            numero += (pontosPorSegundo * multiPontos);
+            renderJoia();
+            goldPorSeg();
         }, 1000)
 
         function felizComprado() {
             if (numero >= 100) {
                 pontosPorSegundo += 1;
                 numero -=100;
+
+                renderJoia();
+                goldPorSeg();
             }
             
         }
         function sorrisoComprado() {
             if (numero >= 500) {
                 pontosPorSegundo += 15;
-                numero -=500;
+                numero -=500;renderJoia();
+
+                renderJoia();
+                goldPorSeg();
             }
             
         }
@@ -203,6 +244,9 @@
             if (numero >= 1500) {
                 pontosPorSegundo += 100;
                 numero -=1500;
+
+                renderJoia();
+                goldPorSeg();
             }
             
         }
@@ -210,6 +254,9 @@
             if (numero >= 4000) {
                 pontosPorSegundo += 380;
                 numero -=4000;
+
+                renderJoia();
+                goldPorSeg();
             }
             
         }
@@ -217,6 +264,9 @@
             if (numero >= 15000) {
                 pontosPorSegundo += 1300;
                 numero -=15000;
+
+                renderJoia();
+                goldPorSeg();
             }
             
         }
@@ -224,20 +274,25 @@
             if (numero >= 40000) {
                 pontosPorSegundo += 10500;
                 numero -=40000;
+
+                renderJoia();
+                goldPorSeg();
             }
-            
+            renderJoia();
         }
 
         //CLICK
-        function pontos() {
+        function pontos(event) {
             numero += pontosPorClick;
+
+            mostrarNumero(pontosPorClick, event.clientX, event.clientY);
+
+            renderJoia();
         }
 
-        function joia() {
-            pontos();
-            renderJoia();
+        function joia(event) {
+            pontos(event);
             
-
             if (numero >= 100 && !upg1liberado) {
                 upgrade1();
                 upg1liberado = true;
@@ -254,16 +309,21 @@
                 upgrade4();
                 upg4liberado = true;
             }
-            verificarConquistas();
-            
+            renderJoia();
         }
         
         //RENDER
         function renderJoia() {
-            const button = document.querySelector("main button")
-            button.innerText = numero.toFixed(2)
+            const p = document.querySelector(".main")
+            p.innerText = numero.toFixed(1) + "🪙"
         }
         renderJoia()
+        function goldPorSeg() {
+            const p = document.querySelector("#goldPerSec")
+            p.innerText = (pontosPorSegundo * multiPontos).toFixed(1) + "g/s"
+        }
+        renderJoia();
+        goldPorSeg();
 
         //UPGRADES
         function upgrade1() {
@@ -283,13 +343,15 @@
 
                 numero -= 100;
                 upg1comprado = true;
-
+                renderJoia()
                 pontosPorClick += 1;
 
                 pipa.innerText = "comprado";
+                pipa.classList.add("comprado")
             
                
                 renderJoia();
+                goldPorSeg();
             }
         }
         function upgrade2() {
@@ -309,13 +371,16 @@
 
                 numero -= 600;
                 upg2comprado = true;
+                renderJoia()
 
                 pontosPorClick += 3;
 
                 presente.innerText = "comprado";
+                presente.classList.add("comprado")
             
                
                 renderJoia();
+                goldPorSeg();
             }
         }
         function upgrade3() {
@@ -335,13 +400,16 @@
 
                 numero -= 1400;
                 upg3comprado = true;
+                renderJoia()
 
                 pontosPorClick *= 1.1;
 
                 coração.innerText = "comprado";
+                coração.classList.add("comprado")
             
                
                 renderJoia();
+                goldPorSeg();
             }
         }function upgrade4() {
             const div = document.querySelector(".upgrade")
@@ -360,13 +428,16 @@
 
                 numero -= 1500;
                 upg4comprado = true;
+                renderJoia()
 
-                pontosPorSegundo *= 1.5;
+                multiPontos += 0.5;
 
                 áries.innerText = "comprado";
+                áries.classList.add("comprado")
             
                
                 renderJoia();
+                goldPorSeg();
             }
         }
         
