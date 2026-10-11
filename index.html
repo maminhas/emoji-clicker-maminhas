@@ -38,35 +38,44 @@
            user-select: none;
         }
         .mainb {
-           font-size: 300px;
-           border: 0px;
-           background: white;
-           cursor: pointer;
-           transition: transform 0.08s;
+            font-size: 300px;
+            border: 0;
+            background: white;
+            cursor: pointer;
+            user-select: none;
+
+            transform: scale(1);
+            transition: transform 60ms ease-out;
         }
+
         .mainb:active {
-            transform: scale(0.9);
+            transform: scale(0.88);
+            transition: transform 30ms ease-in;
         }
         p {
             font-size: 80px;
         }
-        .numeroFlutuante {
+        .numero-flutuante {
             position: fixed;
+            z-index: 9999;
             font-size: 30px;
             font-weight: bold;
             color: goldenrod;
             pointer-events: none;
-            animation: subir 0.8s ease-out forwards;
-        }
-        @keyframe {
+            white-space: nowrap;
 
-            from {
+            animation: subir 700ms ease-out forwards;
+        }
+
+        @keyframes subir {
+            0% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translate(-50%, 0) scale(1);
             }
-            to {
+
+            100% {
                 opacity: 0;
-                transform: translateY(-80px);
+                transform: translate(-50%, -100px) scale(1.2);
             }
         }
         
@@ -165,17 +174,35 @@
         <h3>fazenda</h3>
             <div class="farm">
                 <button onclick="felizComprado()">🙂 <br>
-                custa 100</button>
+                custa 100 <br>
+                1g/s
+                </button>
+
                 <button onclick="sorrisoComprado()">😁 <br>
-                custa 500</button>
+                custa 500 <br>
+                15g/s
+                </button>
+
                 <button onclick="rindoComprado()">😂 <br>
-                custa 1500</button>
+                custa 1500 <br>
+                100g/s
+                </button>
+
                 <button onclick="derretidoComprado()">🥴 <br>
-                custa 4000</button>
+                custa 4000 <br>
+                380g/s
+                </button>
+
                 <button onclick="doidoComprado()">🤪 <br>
-                custa 15000</button>
+                custa 15000 <br>
+                1300g/s
+                </button>
+
                 <button onclick="iradoComprado()">😎 <br>
-                custa 40000</button>
+                custa 40000 <br>
+                10500g/s
+                </button>
+
             </div>
         </div>
     </div>  
@@ -200,7 +227,7 @@
         function mostrarNumero(valor, x, y) {
             const numeroFlutuante = document.createElement("span");
 
-            numeroFlutuante.classList.add("numeroFlutuante");
+            numeroFlutuante.classList.add("numero-flutuante");
             numeroFlutuante.innerText = "+" + valor.toFixed(1);
 
             numeroFlutuante.style.left = x + "px";
@@ -208,10 +235,14 @@
 
             document.body.appendChild(numeroFlutuante);
 
+            setTimeout(() => {
+                numeroFlutuante.remove();
+            }, 700);
+        }
+
     setTimeout(() => {
         numeroFlutuante.remove();
     }, 800);
-}
 
         //PONTOS POR SEGUNDO
         setInterval(() => {
