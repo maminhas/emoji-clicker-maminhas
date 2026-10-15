@@ -13,9 +13,8 @@
         }
         body {
             min-height: 100vh;
-            border: 25px solid black;
+            border: 8px solid black;
             font-family: "Comic Sans MS", sans-serif;
-
             display: grid;
             grid-template-rows: auto 1fr;
         }
@@ -24,7 +23,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1000px;
+            padding: 12px;
+            min-width: 0;
+        }
+        header h1 {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            text-align: center;
         }
         a {
             border: 2px solid black;
@@ -33,17 +37,21 @@
         }
         main {
             display: grid;
-           place-items: center;
-           border: 3px solid black;
-           user-select: none;
+            place-items: center;
+            border: 3px solid black;
+            user-select: none;
+            min-width: 0;
+            padding: 12px;
         }
         .mainb {
-            font-size: 300px;
+            font-size: clamp(100px, 28vw, 300px);
+            line-height: 1.1;
+            max-width: 100%;
             border: 0;
             background: white;
             cursor: pointer;
             user-select: none;
-
+            touch-action: manipulation;
             transform: scale(1);
             transition: transform 60ms ease-out;
         }
@@ -53,7 +61,8 @@
             transition: transform 30ms ease-in;
         }
         p {
-            font-size: 80px;
+            font-size: clamp(1.2rem, 6vw, 5rem);
+            overflow-wrap: anywhere;
         }
         .numero-flutuante {
             position: fixed;
@@ -84,8 +93,9 @@
         }
         section {
             display: grid;
-            grid-template-columns: 180px 1fr;
+            grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
             min-height: calc(100vh - 100px);
+            min-width: 0;
         }
         .upgrade h3 {
             font-size: 25px;
@@ -97,12 +107,18 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
-
+            min-width: 0;
+            padding: 8px;
         }
         .upgrade {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            max-width: 100%;
+        }
+        .upgrade button {
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
         .farm {
             display: flex;
@@ -114,6 +130,7 @@
         .farm-area {
             border: 3px solid black;
             padding: 10px;
+            min-width: 0;
         }
         .farm-area h3 {
             text-align: center;
@@ -124,10 +141,13 @@
             font-family: inherit;
             font-size: 18px;
             padding: 8px;
+            min-width: 0;
+            flex: 1 1 110px;
         }
         .game {
             display: grid;
-             grid-template-rows: 1fr auto;
+            grid-template-rows: minmax(300px, 1fr) auto;
+            min-width: 0;
         }
         .pipa, .presente, .coração, .áries {
             font-size: 100px;
@@ -137,12 +157,80 @@
         }
         .pontuação {
             display: flex;
-            flex: auto;
-            gap: 100px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            min-width: 0;
+            gap: clamp(12px, 4vw, 100px);
             background: #ddd;
             border: 3px solid #aaa;
-            padding: 25px;
+            padding: clamp(10px, 3vw, 25px);
             border-radius: 30px;
+            max-width: 100%;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                border-width: 4px;
+            }
+            section {
+                grid-template-columns: minmax(0, 1fr);
+                min-height: auto;
+            }
+            .upgrades {
+                order: 2;
+                padding: 12px;
+            }
+            .upgrade {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .upgrade button {
+                font-size: clamp(30px, 10vw, 54px);
+            }
+            .game {
+                order: 1;
+                grid-template-rows: auto auto;
+            }
+            main {
+                min-height: 55vh;
+            }
+            .mainb {
+                font-size: clamp(110px, 38vw, 220px);
+            }
+            .pontuação {
+                width: 100%;
+                gap: 12px;
+                border-radius: 16px;
+            }
+            .pontuação p {
+                font-size: clamp(1.2rem, 7vw, 2.5rem);
+            }
+            .farm-area h3 {
+                font-size: 24px;
+            }
+            .farm button {
+                flex-basis: 105px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body {
+                border-width: 2px;
+            }
+            .farm-area {
+                padding: 6px;
+            }
+            .farm {
+                gap: 6px;
+            }
+            .farm button {
+                flex-basis: 90px;
+                padding: 6px 4px;
+                font-size: 14px;
+            }
         }
 
     </style>
